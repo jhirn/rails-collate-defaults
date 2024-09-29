@@ -10,6 +10,11 @@ Requirements: Ruby, Docker
 
 ```bash
 docker-compose up -d
+
+# Issue tracker.
+ruby rails_issue_template.rb
+
+# for the app
 bundle install
 bin/rails db:setup
 bin/rails test
