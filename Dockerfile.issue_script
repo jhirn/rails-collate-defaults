@@ -1,0 +1,14 @@
+# Use the official Ruby image as a base
+FROM ruby:3.3
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the Gemfile and Gemfile.lock
+COPY Gemfile Gemfile.lock ./
+
+# Install gems
+RUN bundle install
+
+# Set the default command
+CMD ["ruby", "rails_issue_template.rb"]

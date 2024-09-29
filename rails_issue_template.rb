@@ -16,8 +16,8 @@ DB_DEFAULTS = {
   encoding: "unicode",
   username: "postgres",
   password: "password",
-  port: 5433,
-  host: "localhost"
+  port: ENV.fetch("DATABASE_PORT", 5433),
+  host: ENV.fetch("DATABASE_HOST", "localhost")
 }
 
 DEFAULT_DB_CONFIG = DB_DEFAULTS.merge(
@@ -72,7 +72,8 @@ class Thing < ActiveRecord::Base
 end
 
 class BugTest < Minitest::Test
-  def create_things
+  def setup_database
+    Thing.delete_all
     [ "Walt Disneyland", "Walt Disney World" ].each do |name|
       Thing.create(name: name)
     end
@@ -108,17 +109,17 @@ class BugTest < Minitest::Test
   def test_default_connection_with_collate_specified
     # Passes if specifying collate
     with_default_connection do
-      create_things
-    database_order = Thing.order('name COLLATE "C"').pluck(:name)
-    expected_order = database_order.sort
-    assert_equal(expected_order, database_order)
+      setup_database
+      database_order = Thing.order('name COLLATE "C"').pluck(:name)
+      expected_order = database_order.sort
+      assert_equal(expected_order, database_order)
     end
   end
 
   private
 
   def order_by_assertions
-    create_things
+    setup_database
     database_order = Thing.order(:name).pluck(:name)
     expected_order = database_order.sort
     assert_equal(expected_order, database_order)

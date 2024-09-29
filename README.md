@@ -9,12 +9,14 @@ IMO it's confusing for Rails' Postgres defaults to be have differently than Ruby
 Requirements: Ruby, Docker
 
 ```bash
-docker-compose up -d
+# Docker Issue Script
+docker-compose up
 
-# Issue tracker.
+# Local Issue Script
+docker-compose up -d
 ruby rails_issue_template.rb
 
-# for the app
+# To run app locally
 bundle install
 bin/rails db:setup
 bin/rails test
