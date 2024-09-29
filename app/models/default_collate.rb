@@ -1,0 +1,2 @@
+class DefaultCollate < PrimaryRecord
+end
